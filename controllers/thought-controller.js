@@ -3,7 +3,8 @@ const { User, Thought } = require("../models");
 const thoughtController = {
   getAllThoughts(req, res) {
     Thought.find({})
-      .populate("username", "reactions", "createdAt")
+      .populate("username")
+      .populate("reactions")
       .select("-__v")
       .then((thoughtData) => {
         res.json(thoughtData);

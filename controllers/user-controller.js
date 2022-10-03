@@ -84,6 +84,7 @@ const userController = {
         if (!data) {
           res.json({ message: "none found with this id" });
         }
+        Thought.deleteMany({ _id: params.userId });
         res.json({ deleted: data });
       })
       .catch((err) => console.log(err));

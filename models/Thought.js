@@ -1,26 +1,29 @@
 const { Schema, model, Types, isObjectIdOrHexString } = require("mongoose");
 const moment = require("moment");
 
-const ReactionSchema = new Schema({
-  reactionId: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-  },
-  reactionBody: {
-    type: String,
-    required: true,
-    max: 280,
-  },
-  username: { type: String, required: true },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (date) => {
-      //use moment to format all new dates
-      moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+const ReactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      max: 280,
+    },
+    username: { type: String, required: true },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (date) => {
+        //use moment to format all new dates
+        return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+      },
     },
   },
-});
+  { toJSON: { getters: true }, id: false, _id: false }
+);
 
 const ThoughtSchema = new Schema(
   {
@@ -30,7 +33,8 @@ const ThoughtSchema = new Schema(
       default: Date.now,
       get: (date) => {
         //use moment to format all new dates
-        moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+
+        return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
       },
     },
     username: {

@@ -3,6 +3,7 @@ const { User, Thought } = require("../models");
 const thoughtController = {
   getAllThoughts(req, res) {
     Thought.find({})
+      //for some reason have to populate these differently or the User virtual breaks
       .populate("username")
       .populate("reactions")
       .select("-__v")
@@ -33,7 +34,8 @@ const thoughtController = {
   },
   getSingleThought({ params }, res) {
     Thought.find({ _id: params.thoughtId })
-      .populate("username", "reactions")
+      .populate("username")
+      .populate("reactions")
       .select("-__v")
       .then((thoughtData) => {
         res.json(thoughtData);

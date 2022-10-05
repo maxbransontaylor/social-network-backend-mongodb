@@ -3,8 +3,8 @@ const { User, Thought } = require("../models");
 const userController = {
   getAllUsers(req, res) {
     User.find({})
-      .populate("friends", "thoughts")
-
+      .populate("friends")
+      .populate("thoughts")
       .select("-__v")
       .then((userData) => {
         res.json(userData);
@@ -54,7 +54,8 @@ const userController = {
   },
   getOneUser({ params }, res) {
     User.find({ _id: params.userId })
-      .populate("friends", "thoughts")
+      .populate("friends")
+      .populate("thoughts")
       .select("-__v")
       .then((userData) => {
         res.json(userData);
